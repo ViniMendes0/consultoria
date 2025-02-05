@@ -1,6 +1,6 @@
 const HeroSection = () => {
   return (
-    <div className="relative w-full flex flex-col items-center justify-center -mt-96 text-center ">
+    <div className="relative w-full flex flex-col items-center justify-center -mt-96 -top-28 text-center ">
       <p className="text-4xl font-extrabold">
         <em className="font-poppins text-[#344A6F] text-opacity-80 ">
           CONSULTORIA PARA NEGÓCIOS.
