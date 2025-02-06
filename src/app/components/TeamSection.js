@@ -12,7 +12,7 @@ const TeamSection = () => {
       <div className="w-16 h-1 bg-[#344A6F] mx-auto mt-2"></div>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-10 mt-10 px-6">
-        {/* Card 1 */}
+        
         <div className=" shadow-lg rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300">
           <img
             src="/equipe1.jpg"
@@ -23,7 +23,7 @@ const TeamSection = () => {
           <p className="text-sm text-black">Frase aqui!</p>
         </div>
 
-        {/* Card 2 */}
+       
         <div className=" shadow-lg rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300">
           <img
             src="/equipe1.jpg"
@@ -34,7 +34,7 @@ const TeamSection = () => {
           <p className="text-sm text-black">Frase aqui</p>
         </div>
 
-        {/* Card 3 */}
+       
         <div className=" shadow-lg rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300">
           <img
             src="/equipe1.jpg"
