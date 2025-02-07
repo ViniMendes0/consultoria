@@ -1,10 +1,10 @@
 const NavegueSection = () => {
   return (
-    <div className="text-center mt-20">
+    <div className="text-center -mt-96">
       <h2 className="mt-56 text-3xl font-extrabold text-[#344A6F]">Navegue</h2>
       <p className="italic text-black mt-2">Conheça o nosso site</p>
       <div className="w-16 h-1 bg-[#344A6F] mx-auto mt-2"></div>
-
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10 px-6">
        
         <div
