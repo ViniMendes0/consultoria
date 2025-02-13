@@ -34,16 +34,16 @@ const Navbar = () => {
       <div className="flex gap-4 p-2">
         {isHome ? (
           <>
-            <button className="bg-gradient-to-r from-green-600 to-green-300 text-black px-3 py-1 rounded hover:opacity-80 transition shadow-xl">
+            <button className="bg-gradient-to-r from-green-600 to-green-400 text-black px-3 py-1 rounded hover:opacity-50 transition shadow-2xl">
               Login
             </button>
 
-            <button className="bg-gradient-to-r from-red-500 to-red-400 text-white px-3 py-1 rounded hover:opacity-80 transition shadow-xl">
+            <button className="bg-gradient-to-r from-red-600 to-red-400 text-white px-3 py-1 rounded hover:opacity-50 transition shadow-xl">
               Logout
             </button>
           </>
         ) : (
-          <button className="bg-[#d8999e] text-[#344A6F] px-4 py-2 rounded hover:bg-[#fae9ea]">
+          <button className="bg-[#d8999e] text-[#344A6F] px-4 py-2 rounded hover:bg-[#fddfe1]">
             Sair
           </button>
         )}
