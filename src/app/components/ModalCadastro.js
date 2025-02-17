@@ -70,6 +70,23 @@ const ModalCadastro = ({ isOpen, onClose }) => {
                   Feminino
                 </label>
 
+
+                 <label className="flex items-center">
+                  
+                  <input type="radio" value="Não binario" checked={sexo === "Não binario"}
+                    onChange={(e) => setSexo(e.target.value)} className="mr-2" />
+                  Não binario
+                </label>
+
+
+                
+                 <label className="flex items-center">
+                  
+                  <input type="radio" value="Outro" checked={sexo === "Outro"}
+                    onChange={(e) => setSexo(e.target.value)} className="mr-2" />
+                  Outro
+                </label>
+
               </div>
             </div>
 
