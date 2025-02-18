@@ -98,7 +98,7 @@ const ModalCadastro = ({ isOpen, onClose }) => {
               className="w-full p-2 border rounded mt-2"
             ></textarea>
 
-            {/* BOTÕES */}
+           
             <div className="flex justify-between mt-4">
               <button
                 onClick={onClose}
