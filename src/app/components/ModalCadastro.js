@@ -1,16 +1,46 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const ModalCadastro = ({ isOpen, onClose }) => {
-  
+const ModalCadastro = ({ isOpen, onClose, onSave }) => {
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [sexo, setSexo] = useState("");
+  const [area, setArea] = useState(""); 
   const [cidade, setCidade] = useState("");
   const [status, setStatus] = useState("");
   const [observacoes, setObservacoes] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSave = () => {
+    if (
+      !nome || !cpf || !telefone || !dataNascimento || !sexo || !area || !cidade || !status
+    ) {
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+    setError("");
+    onSave({
+      nome, cpf, telefone, dataNascimento, sexo, area, cidade, status, observacoes,
+    });
+    onClose();
+  };
+
+  
+  useEffect(() => {
+    if (!isOpen) {
+      setNome("");
+      setCpf("");
+      setTelefone("");
+      setDataNascimento("");
+      setSexo("");
+      setArea(""); 
+      setCidade("");
+      setStatus("");
+      setObservacoes("");
+      setError("");
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -21,76 +51,105 @@ const ModalCadastro = ({ isOpen, onClose }) => {
               Cadastro do Cliente
             </h2>
 
-            
+            {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
             <div className="grid grid-cols-2 gap-3">
-              
-              <input type="text" placeholder="Nome Completo" value={nome}
-                onChange={(e) => setNome(e.target.value)} className="p-2 border rounded"
+              <input
+                type="text"
+                placeholder="Nome Completo"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                className="p-2 border rounded"
+              />
+              <input
+                type="text"
+                placeholder="CPF: 000.000.000-00"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                className="p-2 border rounded"
+              />
+              <input
+                type="text"
+                placeholder="Telefone: (00) 0 0000-0000"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+                className="p-2 border rounded"
+              />
+              <input
+                type="date"
+                value={dataNascimento}
+                onChange={(e) => setDataNascimento(e.target.value)}
+                className="p-2 border rounded"
+              />
+              <input
+                type="text"
+                placeholder="Cidade"
+                value={cidade}
+                onChange={(e) => setCidade(e.target.value)}
+                className="p-2 border rounded"
+              />
+              <input
+                type="text"
+                placeholder="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="p-2 border rounded"
               />
 
-              <input type="text" placeholder="CPF: 000.000.000-00" value={cpf} 
-              onChange={(e) => setCpf(e.target.value)} className="p-2 border rounded"
+           
+              <input
+                type="text"
+                placeholder="Área"
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+                className="p-2 border rounded"
               />
-
-              <input type="text" placeholder="Telefone: (00) 0 0000-0000" value={telefone}
-                onChange={(e) => setTelefone(e.target.value)} className="p-2 border rounded"
-              />
-
-              <input type="date" value={dataNascimento} 
-              onChange={(e) => setDataNascimento(e.target.value)} className="p-2 border rounded"
-              />
-
-              <input type="text" placeholder="Cidade" value={cidade}
-                onChange={(e) => setCidade(e.target.value)} className="p-2 border rounded"
-              />
-
-              <input type="text" placeholder="Status" value={status}
-                onChange={(e) => setStatus(e.target.value)} className="p-2 border rounded"
-              />
-
-            
-
 
               <div className="col-span-2 flex gap-4 items-center">
                 <span className="text-gray-700">Sexo:</span>
-
                 <label className="flex items-center">
-                  
-                  
-                  <input type="radio" value="Masculino" checked={sexo === "Masculino"}
-                    onChange={(e) => setSexo(e.target.value)} className="mr-2" />
+                  <input
+                    type="radio"
+                    value="Masculino"
+                    checked={sexo === "Masculino"}
+                    onChange={(e) => setSexo(e.target.value)}
+                    className="mr-2"
+                  />
                   Masculino
                 </label>
-
-
                 <label className="flex items-center">
-                  
-                  <input type="radio" value="Feminino" checked={sexo === "Feminino"}
-                    onChange={(e) => setSexo(e.target.value)} className="mr-2" />
+                  <input
+                    type="radio"
+                    value="Feminino"
+                    checked={sexo === "Feminino"}
+                    onChange={(e) => setSexo(e.target.value)}
+                    className="mr-2"
+                  />
                   Feminino
                 </label>
-
-
-                 <label className="flex items-center">
-                  
-                  <input type="radio" value="Não binario" checked={sexo === "Não binario"}
-                    onChange={(e) => setSexo(e.target.value)} className="mr-2" />
-                  Não binario
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value="Não binario"
+                    checked={sexo === "Não binario"}
+                    onChange={(e) => setSexo(e.target.value)}
+                    className="mr-2"
+                  />
+                  Não binário
                 </label>
-
-
-                
-                 <label className="flex items-center">
-                  
-                  <input type="radio" value="Outro" checked={sexo === "Outro"}
-                    onChange={(e) => setSexo(e.target.value)} className="mr-2" />
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value="Outro"
+                    checked={sexo === "Outro"}
+                    onChange={(e) => setSexo(e.target.value)}
+                    className="mr-2"
+                  />
                   Outro
                 </label>
-
               </div>
             </div>
 
-           
             <textarea
               placeholder="Observações"
               value={observacoes}
@@ -98,7 +157,6 @@ const ModalCadastro = ({ isOpen, onClose }) => {
               className="w-full p-2 border rounded mt-2"
             ></textarea>
 
-           
             <div className="flex justify-between mt-4">
               <button
                 onClick={onClose}
@@ -107,7 +165,10 @@ const ModalCadastro = ({ isOpen, onClose }) => {
                 Fechar
               </button>
 
-              <button className="bg-green-500 text-white px-4 py-2 rounded">
+              <button
+                onClick={handleSave}
+                className="bg-green-500 text-white px-4 py-2 rounded"
+              >
                 Salvar
               </button>
             </div>

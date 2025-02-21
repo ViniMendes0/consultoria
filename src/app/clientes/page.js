@@ -7,6 +7,7 @@ import ClienteTable from "../components/ClienteTable";
 import Footer from "../components/Footer";
 import ModalCadastro from "../components/ModalCadastro";
 
+
 const ClientesPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -22,8 +23,9 @@ const ClientesPage = () => {
           <ClienteTable />
         </ClienteActions>
       </div>
-
+      
       {modalOpen && (
+        
         <ModalCadastro isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       )}
 

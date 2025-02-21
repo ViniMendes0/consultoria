@@ -3,7 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai"; // Importando o ícone de lupa
 
 const SearchBar = () => {
   return (
-    <div className="flex justify-center mt-8">
+    <div className="flex justify-center mt-8 opacity-0">
       <div className="relative">
         <input
           type="text"
