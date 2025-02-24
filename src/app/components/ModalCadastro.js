@@ -1,32 +1,96 @@
 import React, { useState, useEffect } from "react";
 
+const validarCPF = (cpf) => {
+  cpf = cpf.replace(/\D/g, ""); 
+
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+    return false; 
+  }
+
+  let soma = 0,
+    resto;
+
+
+  for (let i = 0; i < 9; i++) {
+    soma += parseInt(cpf.charAt(i)) * (10 - i);
+  }
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.charAt(9))) return false;
+
+ 
+  soma = 0;
+  for (let i = 0; i < 10; i++) {
+    soma += parseInt(cpf.charAt(i)) * (11 - i);
+  }
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.charAt(10))) return false;
+
+  return true;
+};
+
+
+const formatarCPF = (valor) => {
+  valor = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
+  valor = valor.replace(/^(\d{3})(\d)/, "$1.$2");
+  valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+  valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+  return valor;
+};
+
 const ModalCadastro = ({ isOpen, onClose, onSave }) => {
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [sexo, setSexo] = useState("");
-  const [area, setArea] = useState(""); 
+  const [area, setArea] = useState("");
   const [cidade, setCidade] = useState("");
   const [status, setStatus] = useState("");
   const [observacoes, setObservacoes] = useState("");
   const [error, setError] = useState("");
 
+  const handleCPFChange = (e) => {
+    setCpf(formatarCPF(e.target.value));
+  };
+
   const handleSave = () => {
     if (
-      !nome || !cpf || !telefone || !dataNascimento || !sexo || !area || !cidade || !status
+      !nome ||
+      !cpf ||
+      !telefone ||
+      !dataNascimento ||
+      !sexo ||
+      !area ||
+      !cidade ||
+      !status
     ) {
       setError("Por favor, preencha todos os campos.");
       return;
     }
+
+    if (!validarCPF(cpf)) {
+      setError("CPF inválido. Verifique e tente novamente.");
+      return;
+    }
+
     setError("");
     onSave({
-      nome, cpf, telefone, dataNascimento, sexo, area, cidade, status, observacoes,
+      nome,
+      cpf,
+      telefone,
+      dataNascimento,
+      sexo,
+      area,
+      cidade,
+      status,
+      observacoes,
     });
     onClose();
   };
 
-  
+
   useEffect(() => {
     if (!isOpen) {
       setNome("");
@@ -34,7 +98,7 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
       setTelefone("");
       setDataNascimento("");
       setSexo("");
-      setArea(""); 
+      setArea("");
       setCidade("");
       setStatus("");
       setObservacoes("");
@@ -45,7 +109,7 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
             <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">
               Cadastro do Cliente
@@ -65,7 +129,8 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 type="text"
                 placeholder="CPF: 000.000.000-00"
                 value={cpf}
-                onChange={(e) => setCpf(e.target.value)}
+                onChange={handleCPFChange}
+                maxLength={14}
                 className="p-2 border rounded"
               />
               <input
@@ -96,7 +161,6 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 className="p-2 border rounded"
               />
 
-           
               <input
                 type="text"
                 placeholder="Área"
@@ -130,8 +194,8 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    value="Não binario"
-                    checked={sexo === "Não binario"}
+                    value="Não binário"
+                    checked={sexo === "Não binário"}
                     onChange={(e) => setSexo(e.target.value)}
                     className="mr-2"
                   />
