@@ -1,43 +1,4 @@
-import React, { useState, useEffect } from "react";
-
-const validarCPF = (cpf) => {
-  cpf = cpf.replace(/\D/g, ""); 
-
-  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-    return false; 
-  }
-
-  let soma = 0,
-    resto;
-
-
-  for (let i = 0; i < 9; i++) {
-    soma += parseInt(cpf.charAt(i)) * (10 - i);
-  }
-  resto = (soma * 10) % 11;
-  if (resto === 10 || resto === 11) resto = 0;
-  if (resto !== parseInt(cpf.charAt(9))) return false;
-
- 
-  soma = 0;
-  for (let i = 0; i < 10; i++) {
-    soma += parseInt(cpf.charAt(i)) * (11 - i);
-  }
-  resto = (soma * 10) % 11;
-  if (resto === 10 || resto === 11) resto = 0;
-  if (resto !== parseInt(cpf.charAt(10))) return false;
-
-  return true;
-};
-
-
-const formatarCPF = (valor) => {
-  valor = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
-  valor = valor.replace(/^(\d{3})(\d)/, "$1.$2");
-  valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-  valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
-  return valor;
-};
+import React, { useState, useEffect, useRef } from "react";
 
 const ModalCadastro = ({ isOpen, onClose, onSave }) => {
   const [nome, setNome] = useState("");
@@ -51,20 +12,79 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
   const [observacoes, setObservacoes] = useState("");
   const [error, setError] = useState("");
 
+  const telefoneRef = useRef(""); 
+
+  const handleTelefoneChange = (e) => {
+    let valor = e.target.value;
+
+    valor = valor.replace(/\D/g, "");
+
+    if (valor.length > 11) {
+      valor = valor.slice(0, 11);
+    }
+
+    if (valor.length <= 10) {
+      
+      valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+    } else {
+     
+      valor = valor.replace(/^(\d{2})(\d{1})(\d{4})(\d{0,4})$/, "($1) $2$3-$4");
+    }
+    telefoneRef.current = valor;
+    setTelefone(valor);
+  };
+
+
+
+
+
   const handleCPFChange = (e) => {
     setCpf(formatarCPF(e.target.value));
   };
 
+  const validarCPF = (cpf) => {
+    cpf = cpf.replace(/\D/g, "");
+
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+      return false;
+    }
+
+    let soma = 0,
+      resto;
+
+    for (let i = 0; i < 9; i++) {
+      soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(9))) return false;
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+      soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(10))) return false;
+
+    return true;
+  };
+
+  const formatarCPF = (valor) => {
+    valor = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
+    valor = valor.replace(/^(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+    valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+    return valor;
+  };
+
+
+
+
+
   const handleSave = () => {
     if (
-      !nome ||
-      !cpf ||
-      !telefone ||
-      !dataNascimento ||
-      !sexo ||
-      !area ||
-      !cidade ||
-      !status
+      !nome || !cpf ||  !telefone ||  !dataNascimento ||  !sexo ||  !area ||  !cidade ||  !status
     ) {
       setError("Por favor, preencha todos os campos.");
       return;
@@ -77,32 +97,16 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
 
     setError("");
     onSave({
-      nome,
-      cpf,
-      telefone,
-      dataNascimento,
-      sexo,
-      area,
-      cidade,
-      status,
-      observacoes,
+      nome, cpf, telefone, dataNascimento, sexo, area, cidade, status, observacoes,
     });
     onClose();
   };
 
-
   useEffect(() => {
     if (!isOpen) {
-      setNome("");
-      setCpf("");
-      setTelefone("");
-      setDataNascimento("");
-      setSexo("");
-      setArea("");
-      setCidade("");
-      setStatus("");
-      setObservacoes("");
-      setError("");
+      setNome(""); setCpf(""); setTelefone(""); setDataNascimento(""); setSexo("");
+      setArea(""); setCidade(""); setStatus(""); setObservacoes(""); setError("");
+      telefoneRef.current = ""; 
     }
   }, [isOpen]);
 
@@ -137,7 +141,8 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 type="text"
                 placeholder="Telefone: (00) 0 0000-0000"
                 value={telefone}
-                onChange={(e) => setTelefone(e.target.value)}
+                onChange={handleTelefoneChange}
+                maxLength={15} // Limite máximo de caracteres com a máscara
                 className="p-2 border rounded"
               />
               <input
