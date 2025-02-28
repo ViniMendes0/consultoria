@@ -9,52 +9,47 @@ const ClienteTable = ({ searchQuery, clientes }) => {
   });
 
   return (
-    <div className="-mb-60 bg-white p-4 rounded-md shadow-md border border-pink-300">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="bg-gray-400 text-white">
-            <th className="border bg-[#344A6F] p-2">ID</th>
-            <th className="border bg-[#344A6F] p-2 text-white">Nome</th>
-            <th className="border bg-[#344A6F] p-2">CPF</th>
-            <th className="border bg-[#344A6F] p-2 text-white">Telefone</th>
-            <th className="border bg-[#344A6F] p-2">Área</th>
-            <th className="border bg-[#344A6F] p-2 text-white">Status</th>
-            <th className="border bg-[#344A6F] p-2">Data Nasc</th>
-            <th className="border bg-[#344A6F] p-2 text-white">Sexo</th>
-            <th className="border bg-[#344A6F] p-2">Cidade</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredClients.map((client) => (
-            <tr key={client.id} className="text-center">
-              <td className="border border-gray-500 p-2 bg-[#fffffF] text-black">
-                {client.id}
-              </td>
-              <td className="border border-gray-500 bg-[#ffffff] text-black p-2">
-                {client.nome}
-              </td>
-              <td className="border border-gray-500 bg-[#ffffff] text-black p-2">
-                {client.cpf}
-              </td>
-              <td className="border border-gray-500 bg-[#ffffff] text-black p-2">
-                {client.telefone}
-              </td>
-              <td className="border border-gray-500 p-2">{client.area}</td>{" "}
-              
-              <td className="border border-gray-500 bg-[#ffffff] text-black p-2">
-                {client.status}
-              </td>
-              <td className="border border-gray-500 p-2">
-                {client.dataNascimento}
-              </td>
-              <td className="border border-gray-500 bg-[#ffffff] text-black p-2">
-                {client.sexo}
-              </td>
-              <td className="border border-gray-500 p-2">{client.cidade}</td>
+    <div className="-mb-60 mb-10 bg-white p-4 rounded-md shadow-md border border-pink-300">
+      <div className="overflow-x-auto"> 
+        <table className="w-full table-auto border-collapse">
+          <thead>
+            <tr className="bg-gray-400 text-white">
+              <th className="border bg-[#344A6F] p-2">ID</th>
+              <th className="border bg-[#344A6F] p-2">Nome</th>
+              <th className="border bg-[#344A6F] p-2 px-14">CPF</th>
+              <th className="border bg-[#344A6F] p-2 px-10">Telefone</th>
+              <th className="border bg-[#344A6F] p-2">Cidade</th>
+              <th className="border bg-[#344A6F] p-2">Área</th>
+              <th className="border bg-[#344A6F] p-2">Status</th>
+              <th className="border bg-[#344A6F] p-2">Sexo</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredClients.map((client, index) => (
+              <React.Fragment key={index}>
+                <tr>
+                  <td className="border p-2">{index + 1}</td>
+                  <td className="border p-2">{client.nome}</td>
+                  <td className="border p-2">{client.cpf}</td>
+                  <td className="border p-2">{client.telefone}</td>
+                  <td className="border p-2">{client.cidade}</td>
+                  <td className="border p-2">{client.area}</td>
+                  <td className="border p-2">{client.status}</td>
+                  <td className="border p-2">{client.sexo}</td>
+                </tr>
+
+                {client.observacoes && (
+                  <tr>
+                    <td colSpan="8" className="border p-2 bg-gray-200">
+                      <strong>Observações:</strong> {client.observacoes}
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

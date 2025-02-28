@@ -16,27 +16,18 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
 
   const handleTelefoneChange = (e) => {
     let valor = e.target.value;
-
     valor = valor.replace(/\D/g, "");
-
     if (valor.length > 11) {
       valor = valor.slice(0, 11);
     }
-
     if (valor.length <= 10) {
-      
       valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
     } else {
-     
       valor = valor.replace(/^(\d{2})(\d{1})(\d{4})(\d{0,4})$/, "($1) $2$3-$4");
     }
     telefoneRef.current = valor;
     setTelefone(valor);
   };
-
-
-
-
 
   const handleCPFChange = (e) => {
     setCpf(formatarCPF(e.target.value));
@@ -44,14 +35,11 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
 
   const validarCPF = (cpf) => {
     cpf = cpf.replace(/\D/g, "");
-
     if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
       return false;
     }
 
-    let soma = 0,
-      resto;
-
+    let soma = 0, resto;
     for (let i = 0; i < 9; i++) {
       soma += parseInt(cpf.charAt(i)) * (10 - i);
     }
@@ -71,20 +59,16 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
   };
 
   const formatarCPF = (valor) => {
-    valor = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
+    valor = valor.replace(/\D/g, "");
     valor = valor.replace(/^(\d{3})(\d)/, "$1.$2");
     valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
     valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
     return valor;
   };
 
-
-
-
-
   const handleSave = () => {
     if (
-      !nome || !cpf ||  !telefone ||  !dataNascimento ||  !sexo ||  !area ||  !cidade ||  !status
+      !nome || !cpf || !telefone || !dataNascimento || !sexo || !area || !cidade || !status
     ) {
       setError("Por favor, preencha todos os campos.");
       return;
@@ -97,7 +81,7 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
 
     setError("");
     onSave({
-      nome, cpf, telefone, dataNascimento, sexo, area, cidade, status, observacoes,
+      nome, cpf, telefone, dataNascimento, sexo, area, cidade, status, observacoes
     });
     onClose();
   };
@@ -142,7 +126,7 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 placeholder="Telefone: (00) 0 0000-0000"
                 value={telefone}
                 onChange={handleTelefoneChange}
-                maxLength={15} // Limite máximo de caracteres com a máscara
+                maxLength={15} 
                 className="p-2 border rounded"
               />
               <input
@@ -165,7 +149,6 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) => setStatus(e.target.value)}
                 className="p-2 border rounded"
               />
-
               <input
                 type="text"
                 placeholder="Área"
@@ -173,7 +156,6 @@ const ModalCadastro = ({ isOpen, onClose, onSave }) => {
                 onChange={(e) => setArea(e.target.value)}
                 className="p-2 border rounded"
               />
-
               <div className="col-span-2 flex gap-4 items-center">
                 <span className="text-gray-700">Sexo:</span>
                 <label className="flex items-center">
