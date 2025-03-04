@@ -9,7 +9,7 @@ const ClienteTable = ({ searchQuery, clientes }) => {
   });
 
   return (
-    <div className="-mb-60 mb-10 bg-white p-4 rounded-md shadow-md border border-pink-300">
+    <div className="-mb-60  bg-white p-4 rounded-md shadow-md border border-pink-300">
       <div className="overflow-x-auto"> 
         <table className="w-full table-auto border-collapse">
           <thead>

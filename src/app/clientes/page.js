@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import SearchBar from "../components/SearchBar";
 import ClienteActions from "../components/ClienteActions";
 import ClienteTable from "../components/ClienteTable";
+import SearchBar from "../components/SearchBar";
 import Footer from "../components/Footer";
 import ModalCadastro from "../components/ModalCadastro";
 
